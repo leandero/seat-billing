@@ -1,5 +1,5 @@
 {
-    "name": "recursivetree/seat-billing",
+    "name": "leandero/seat-billing",
     "description": "Plugin to assist with corp/alliance billing statements",
     "type": "seat-plugin",
     "license": "GPL-2.0-only",
