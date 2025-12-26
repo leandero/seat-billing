@@ -40,3 +40,6 @@
         "recursivetree/seat-treelib": "^2.1.3"
     }
 }
+
+"minimum-stability": "dev",
+"prefer-stable": true,
