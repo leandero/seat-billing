@@ -1,6 +1,6 @@
 {
     "name": "leandero/seat-billing",
-    "description": "Plugin to assist with corp/alliance billing statements",
+    "description": "Custom seat-billing with 5% tax on completed courier/hauling contracts",
     "type": "seat-plugin",
     "license": "GPL-2.0-only",
     "authors": [
@@ -11,18 +11,23 @@
         {
             "name": "recursivetree",
             "email": "recursivetreemail@gmail.com"
+        },
+        {
+            "name": "leandero",
+            "role": "Maintainer (custom hauling tax fork)"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Denngarr\\Seat\\Billing\\": "src/"
+            "Leandero\\Seat\\Billing\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Denngarr\\Seat\\Billing\\BillingServiceProvider"
+                "Leandero\\Seat\\Billing\\BillingServiceProvider"
             ]
         }
     },
