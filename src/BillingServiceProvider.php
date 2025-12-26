@@ -1,6 +1,6 @@
 <?php
 
-namespace leandero\Seat\Billing;
+namespace Leandero\Seat\Billing;
 
 use Denngarr\Seat\Billing\Commands\BillingUpdateLive;
 use Denngarr\Seat\Billing\database\seeders\ScheduleSeeder;
