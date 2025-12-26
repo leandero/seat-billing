@@ -19,18 +19,18 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "Leandero\\Seat\\Billing\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Leandero\\Seat\\Billing\\BillingServiceProvider"
-            ]
-        }
-    },
+"autoload": {
+    "psr-4": {
+        "Leandero\\Seat\\Billing\\": "src/"
+    }
+},
+"extra": {
+    "laravel": {
+        "providers": [
+            "Leandero\\Seat\\Billing\\BillingServiceProvider"
+        ]
+    }
+},
     "require": {
         "php": "^8.1",
         "eveseat/services": "^5.0.1",
