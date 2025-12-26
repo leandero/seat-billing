@@ -11,7 +11,7 @@ Thanks to dysath/denngarr for writing the original plugin. Development has been 
 
 See the instruction over at the [seat documentation](https://eveseat.github.io/docs/community_packages/).
 
-The package name is `recursivetree/seat-billing`.
+The package name is `leandero/seat-billing`.
 
 ## Known issues
 * Characters changing corporations causes all kind of issues.
