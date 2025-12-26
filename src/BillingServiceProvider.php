@@ -2,19 +2,19 @@
 
 namespace Leandero\Seat\Billing;
 
-use Denngarr\Seat\Billing\Commands\BillingUpdateLive;
-use Denngarr\Seat\Billing\database\seeders\ScheduleSeeder;
-use Denngarr\Seat\Billing\Jobs\GenerateInvoices;
-use Denngarr\Seat\Billing\Jobs\ProcessTaxPayment;
-use Denngarr\Seat\Billing\Models\CharacterBill;
-use Denngarr\Seat\Billing\Models\TaxInvoice;
-use Denngarr\Seat\Billing\Observers\CorporationWalletJournalObserver;
-use Denngarr\Seat\Billing\Observers\TaxInvoiceObserver;
+use Leandero\Seat\Billing\Commands\BillingUpdateLive;
+use Leandero\Seat\Billing\database\seeders\ScheduleSeeder;
+use Leandero\Seat\Billing\Jobs\GenerateInvoices;
+use Leandero\Seat\Billing\Jobs\ProcessTaxPayment;
+use Leandero\Seat\Billing\Models\CharacterBill;
+use Leandero\Seat\Billing\Models\TaxInvoice;
+use Leandero\Seat\Billing\Observers\CorporationWalletJournalObserver;
+use Leandero\Seat\Billing\Observers\TaxInvoiceObserver;
 use Seat\Eveapi\Jobs\Character\Info as CharacterInfoJob;
 use Seat\Eveapi\Jobs\Corporation\Info as CorporationInfoJob;
 use Seat\Eveapi\Models\Wallet\CorporationWalletJournal;
 use Seat\Services\AbstractSeatPlugin;
-use Denngarr\Seat\Billing\Commands\BillingUpdate;
+use Leandero\Seat\Billing\Commands\BillingUpdate;
 use Illuminate\Support\Facades\Artisan;
 
 class BillingServiceProvider extends AbstractSeatPlugin
@@ -31,7 +31,6 @@ class BillingServiceProvider extends AbstractSeatPlugin
         $this->add_migrations();
         $this->add_translations();
         $this->add_commands();
-
         TaxInvoice::observe(TaxInvoiceObserver::class);
         CorporationWalletJournal::observe(CorporationWalletJournalObserver::class);
     }
@@ -67,14 +66,11 @@ class BillingServiceProvider extends AbstractSeatPlugin
     public function register()
     {
         BillingSettings::init();
-
         $this->mergeConfigFrom(__DIR__ . '/Config/billing.sidebar.php', 'package.sidebar');
-
         $this->registerPermissions(
             __DIR__ . '/Config/billing.permissions.php',
             'billing'
         );
-
         $this->registerDatabaseSeeders(ScheduleSeeder::class);
     }
 
@@ -90,23 +86,23 @@ class BillingServiceProvider extends AbstractSeatPlugin
             BillingUpdateLive::class
         ]);
 
-        Artisan::command("billing:reset",function (){
-           TaxInvoice::truncate();
-           CharacterBill::query()->update(['tax_invoice_id'=>null]);
+        Artisan::command("billing:reset", function () {
+            TaxInvoice::truncate();
+            CharacterBill::query()->update(['tax_invoice_id' => null]);
         });
 
-        Artisan::command("billing:processJournalEntry {id}",function ($id){
+        Artisan::command("billing:processJournalEntry {id}", function ($id) {
             $journal_entry = CorporationWalletJournal::find($id);
             ProcessTaxPayment::dispatchNow($journal_entry);
         });
 
-        Artisan::command("billing:scheduleCharInfos",function (){
+        Artisan::command("billing:scheduleCharInfos", function () {
             $ids = CharacterBill::select("character_id")->distinct()->pluck("character_id");
-            foreach ($ids as $id){
+            foreach ($ids as $id) {
                 CharacterInfoJob::dispatch($id);
             }
             $ids = CharacterBill::select("corporation_id")->distinct()->pluck("corporation_id");
-            foreach ($ids as $id){
+            foreach ($ids as $id) {
                 CorporationInfoJob::dispatch($id);
             }
         });
@@ -115,18 +111,16 @@ class BillingServiceProvider extends AbstractSeatPlugin
     /**
      * Return the plugin public name as it should be displayed into settings.
      *
-     * @example SeAT Web
-     *
      * @return string
      */
     public function getName(): string
     {
-        return 'SeAT Billing';
+        return 'SeAT Billing (Custom Hauling Tax)';
     }
 
     public function getPackageRepositoryUrl(): string
     {
-        return 'https://github.com/recursivetree/seat-billing';
+        return 'https://github.com/leandero/seat-billing';
     }
 
     public function getPackagistPackageName(): string
@@ -136,6 +130,6 @@ class BillingServiceProvider extends AbstractSeatPlugin
 
     public function getPackagistVendorName(): string
     {
-        return 'recursivetree';
+        return 'leandero';
     }
 }
