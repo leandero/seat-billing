@@ -38,8 +38,7 @@
         "eveseat/eveapi": "^5.0.1",
         "eveseat/web": "^5.0.1",
         "recursivetree/seat-treelib": "^2.1.3"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
-
-"minimum-stability": "dev",
-"prefer-stable": true,
